@@ -9,21 +9,20 @@
  */
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import jGame.JGameFrame;
 
 public class GemCollecting extends JGameFrame {
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 200;
-	
 	private GemCollectorPanel gemCollectorPanel;
 	private GemCollectorPlayer player;
 	
 	public GemCollecting() {
 		int amountOfGems = 5;
 
-		player = new GemCollectorPlayer(40, 40, 20, Color.black);
-		gemCollectorPanel = new GemCollectorPanel(WIDTH, HEIGHT, amountOfGems, player);
+		initPlayer(2, 2, amountOfGems, Color.black);
+		gemCollectorPanel = new GemCollectorPanel(GemCollectorConfig.BOARD_WIDTH, GemCollectorConfig.BOARD_HEIGHT, player);
 		
 		addPanel(gemCollectorPanel);
 		
@@ -35,18 +34,30 @@ public class GemCollecting extends JGameFrame {
 	 */
 	private void initGems() {
 		Color purple = new Color(138,43,226);
+		Image purple_image = Toolkit.getDefaultToolkit().getImage("./images/purple_stone.png");
+		initGem(5, 5, purple_image, purple);
 
-		GemCollectorGem purpleGem = new GemCollectorGem(100, 100, 20, purple);
-		GemCollectorGem redGem = new GemCollectorGem(20, 60, 20, Color.red);
-		GemCollectorGem blueGem = new GemCollectorGem(80, 20, 20, Color.blue);
-		GemCollectorGem greenGem = new GemCollectorGem(40, 100, 20, Color.green);
-		GemCollectorGem orangeGem = new GemCollectorGem(60, 40, 20, Color.orange);
+		Image red_image = Toolkit.getDefaultToolkit().getImage("./images/red_stone.png");
+		initGem(1, 3, red_image, Color.red);
+
+		Image blue_image = Toolkit.getDefaultToolkit().getImage("./images/blue_stone.png");
+		initGem(4, 1, blue_image, Color.blue);
 		
-		gemCollectorPanel.addGem(purpleGem);
-		gemCollectorPanel.addGem(redGem);
-		gemCollectorPanel.addGem(blueGem);
-		gemCollectorPanel.addGem(greenGem);
-		gemCollectorPanel.addGem(orangeGem);
+		Image green_image = Toolkit.getDefaultToolkit().getImage("./images/green_stone.png");
+		initGem(2, 5, green_image, Color.green);
+
+		Image orange_image = Toolkit.getDefaultToolkit().getImage("./images/orange_stone.png");
+		initGem(3, 2, orange_image, Color.orange);
+	}
+	
+	private void initPlayer(int x, int y, int amountOfGems, Color color) {
+		GemCollectorCollector collector = new GemCollectorCollector(amountOfGems);
+		player = new GemCollectorPlayer(x * GemCollectorConfig.TILE_SIZE, y * GemCollectorConfig.TILE_SIZE, GemCollectorConfig.TILE_SIZE, color, collector);
+	}
+	
+	private void initGem(int x, int y, Image image, Color color) {
+		GemCollectorGem gem = new GemCollectorGem(x * GemCollectorConfig.TILE_SIZE, y * GemCollectorConfig.TILE_SIZE, GemCollectorConfig.TILE_SIZE, image, color);
+		gemCollectorPanel.addGem(gem);
 	}
 	
 	public static void main(String[] args) {

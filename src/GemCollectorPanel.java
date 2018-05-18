@@ -17,6 +17,8 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,7 +29,6 @@ import jGame.JGamePanel;
 
 public class GemCollectorPanel extends JGamePanel implements ActionListener {
 	private Timer timer;
-	private final int updateDelay = 10;
 	
 	private GemCollectorTopBar gemCollectorTopBar;
 	private int amountOfGems;
@@ -35,7 +36,7 @@ public class GemCollectorPanel extends JGamePanel implements ActionListener {
 	private GemCollectorPlayer player;
 	private int slotIndex;
 	
-	public GemCollectorPanel(int width, int height, int amountOfGems, GemCollectorPlayer player) {
+	public GemCollectorPanel(int width, int height, GemCollectorPlayer player) {
 		super(width, height);
 		
 		this.amountOfGems = amountOfGems;
@@ -43,12 +44,12 @@ public class GemCollectorPanel extends JGamePanel implements ActionListener {
 		
 		gems = new ArrayList<GemCollectorGem>();
 		
-		player.setPosition(player.getX(), player.getY() + GemCollectorTopBar.HEIGHT);
+		player.setPosition(player.getX(), player.getY() + GemCollectorConfig.TOP_BAR_HEIGHT);
 		
-		gemCollectorTopBar = new GemCollectorTopBar(width, amountOfGems);
+		gemCollectorTopBar = new GemCollectorTopBar(width, player.getCollector());
 		slotIndex = 0;
 		
-		timer = new Timer(updateDelay, this);
+		timer = new Timer(GemCollectorConfig.TIMER_UPDATE_DELAY, this);
 		timer.start();
 	}
 	
@@ -56,7 +57,7 @@ public class GemCollectorPanel extends JGamePanel implements ActionListener {
 	 * Mutators
 	 */
 	public void addGem(GemCollectorGem gem) {
-		gem.setPosition(gem.getX(), gem.getY() + GemCollectorTopBar.HEIGHT);
+		gem.setPosition(gem.getX(), gem.getY() + GemCollectorConfig.TOP_BAR_HEIGHT);
 		
 		gems.add(gem);
 	}
@@ -78,8 +79,8 @@ public class GemCollectorPanel extends JGamePanel implements ActionListener {
 	 *  and it will become "slotted" for that slot.
 	 */
 	private void moveGemsTowardsSlots() {
-		for (int i = 0 ; i < gemCollectorTopBar.getAmountOfGems() ; i++) {
-			GemCollectorGemSlot slot = gemCollectorTopBar.getGemSlot(i);
+		for (int i = 0 ; i < gemCollectorTopBar.getCollector().getAmountOfGems() ; i++) {
+			GemCollectorGemSlot slot = gemCollectorTopBar.getCollector().getGemSlot(i);
 			
 			if (slot.hasGem()) {
 				GemCollectorGem gem = slot.getGem();
@@ -121,6 +122,8 @@ public class GemCollectorPanel extends JGamePanel implements ActionListener {
 			player.goDown();
 		} else if (e.getKeyChar() == 'a') {
 			player.goLeft();
+		} else if (e.getKeyChar() == 'q') {
+			player.changeToNextGemSlot();
 		}
 		
 		checkPlayerGemInteraction();
@@ -132,7 +135,7 @@ public class GemCollectorPanel extends JGamePanel implements ActionListener {
 	private void checkPlayerGemInteraction() {
 		for (GemCollectorGem gem : gems) {
 			if (gem.getX() == player.getX() && gem.getY() == player.getY()) {
-				gemCollectorTopBar.getGemSlot(slotIndex).addGem(gem);
+				gemCollectorTopBar.getCollector().getGemSlot(slotIndex).addGem(gem);
 				slotIndex++;
 			}
 		}

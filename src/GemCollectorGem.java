@@ -9,20 +9,24 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 public class GemCollectorGem {
 	private int x;
 	private int y;
 	private int size;
+	private Image image;
 	private Color color;
 	
-	public GemCollectorGem(int x, int y, int size, Color color) {
+	public GemCollectorGem(int x, int y, int size, Image image, Color color) {
 		this.x = x;
 		this.y = y;
 		this.size = size;
+		this.image = image;
 		this.color = color;
 	}
-	
+
 	/*
 	 * Mutators
 	 */
@@ -54,10 +58,6 @@ public class GemCollectorGem {
 	 * Painters
 	 */
 	public void paint(Graphics g) {
-		g.setColor(color);
-		g.fillOval(x + size / 4, y + size / 4, size / 2, size / 2);
-		
-		g.setColor(Color.black);
-		g.drawOval(x + size / 4, y + size / 4, size / 2, size / 2);
+		g.drawImage(image, x+size/8, y+size/8, (3 * size) / 4, (3 * size) / 4, null);
 	}
 }

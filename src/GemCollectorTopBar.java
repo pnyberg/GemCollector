@@ -12,30 +12,11 @@ import java.awt.Graphics;
 
 public class GemCollectorTopBar {
 	private int width;
-	public static final int HEIGHT = 30;
+	private GemCollectorCollector collector;
 	
-	private GemCollectorGemSlot[] gemSlots;
-	
-	public GemCollectorTopBar(int width, int amountOfGems) {
+	public GemCollectorTopBar(int width, GemCollectorCollector collector) {
 		this.width = width;
-		gemSlots = new GemCollectorGemSlot[amountOfGems];
-		
-		initGemSlots();
-	}
-	
-	/*
-	 * Mutators
-	 */
-	/**
-	 * Initialize all the gemslots and line them up in a row
-	 */
-	private void initGemSlots() {
-		int y = (HEIGHT - GemCollectorGemSlot.GEM_SLOT_DIAMETER) / 2;
-		for (int i = 0 ; i < gemSlots.length ; i++) {
-			int x = 100 + i * (GemCollectorGemSlot.GEM_SLOT_DIAMETER+10);
-			GemCollectorGemSlot slot = new GemCollectorGemSlot(x, y);
-			gemSlots[i] = slot;
-		}
+		this.collector = collector;
 	}
 	
 	/*
@@ -45,20 +26,8 @@ public class GemCollectorTopBar {
 		return width;
 	}
 	
-	public int getAmountOfGems() {
-		return gemSlots.length;
-	}
-	
-	public GemCollectorGemSlot getGemSlot(int index) {
-		return gemSlots[index];
-	}
-	
-	public int getGemSlotPositionX(int index) {
-		return gemSlots[index].getX();
-	}
-	
-	public int getGemSlotPositionY(int index) {
-		return gemSlots[index].getY();
+	public GemCollectorCollector getCollector() {
+		return collector;
 	}
 	
 	/*
@@ -66,13 +35,11 @@ public class GemCollectorTopBar {
 	 */
 	public void paint(Graphics g, int x, int y) {
 		g.setColor(Color.white);
-		g.fillRect(x, y, width, HEIGHT);
+		g.fillRect(x, y, width, GemCollectorConfig.TOP_BAR_HEIGHT);
 
 		g.setColor(Color.black);
-		g.drawRect(x, y, width, HEIGHT);
+		g.drawRect(x, y, width, GemCollectorConfig.TOP_BAR_HEIGHT);
 		
-		for (GemCollectorGemSlot gemSlot : gemSlots) {
-			gemSlot.paint(g);
-		}
+		collector.paint(g);
 	}	
 }

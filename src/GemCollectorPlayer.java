@@ -16,12 +16,17 @@ public class GemCollectorPlayer {
 	private int y;
 	private int size;
 	private Color color;
+	private int activeSlotIndex;
+	private GemCollectorCollector collector;
 	
-	public GemCollectorPlayer(int x, int y, int size, Color color) {
+	public GemCollectorPlayer(int x, int y, int size, Color color, GemCollectorCollector collector) {
 		this.x = x;
 		this.y = y;
 		this.size = size;
 		this.color = color;
+		this.collector = collector;
+		
+		activeSlotIndex = -1;
 	}
 	
 	/*
@@ -48,6 +53,17 @@ public class GemCollectorPlayer {
 		x += size;
 	}
 	
+	public void changeToNextGemSlot() {
+		for (int i = activeSlotIndex+1 ; i < collector.getAmountOfGems() ; i++) {
+			if (collector.getGemSlot(i).isGemSlotted()) {
+				activeSlotIndex = i;
+				return;
+			}
+		}
+		
+		activeSlotIndex = -1;
+	}
+	
 	/*
 	 * Getters
 	 */
@@ -67,10 +83,30 @@ public class GemCollectorPlayer {
 		return color;
 	}
 	
+	public GemCollectorCollector getCollector() {
+		return collector;
+	}
+	
+	private int getNumberOfSlottedGems() {
+		int numberOfSlottedGems = 0;
+		
+		for (int i = 0 ; i < collector.getAmountOfGems() ; i++) {
+			if (collector.getGemSlot(i).isGemSlotted()) {
+				numberOfSlottedGems++;
+			}
+		}
+		
+		return numberOfSlottedGems;
+	}
+	
 	/*
 	 * Painters
 	 */
 	public void paint(Graphics g) {
+		if (activeSlotIndex != -1) {
+			g.setColor(collector.getGemSlot(activeSlotIndex).getGem().getColor());
+			g.fillRect(x-2, y-2, size+5, size+5);			
+		}
 		g.setColor(color);
 		g.fillRect(x, y, size, size);
 		g.setColor(Color.black);

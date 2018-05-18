@@ -10,8 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class GemCollectorGemSlot {
-	public static final int GEM_SLOT_DIAMETER = 20;
-
 	private int x;
 	private int y;
 	private GemCollectorGem gem;
@@ -66,14 +64,20 @@ public class GemCollectorGemSlot {
 	 * Painters
 	 */
 	public void paint(Graphics g) {
-		g.setColor(Color.white);
-		g.fillOval(x, y, GEM_SLOT_DIAMETER, GEM_SLOT_DIAMETER);
+		int diameter = GemCollectorConfig.GEM_SLOT_DIAMETER;
+
+		if (gemSlotted) {
+			g.setColor(gem.getColor());
+		} else {
+			g.setColor(Color.white);
+		}
+		g.fillOval(x, y, diameter, diameter);
 
 		g.setColor(Color.black);
-		g.drawOval(x, y, GEM_SLOT_DIAMETER, GEM_SLOT_DIAMETER);
+		g.drawOval(x, y, diameter, diameter);
 
 		g.setColor(Color.gray);
-		g.fillOval(x+2, y+2, GEM_SLOT_DIAMETER-4, GEM_SLOT_DIAMETER-4);
+		g.fillOval(x+2, y+2, diameter-4, diameter-4);
 		
 		if (gemSlotted) {
 			gem.paint(g);

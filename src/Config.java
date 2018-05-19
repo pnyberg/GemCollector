@@ -1,5 +1,5 @@
 
-public class GemCollectorConfig {
+public class Config {
 	// timer
 	public static final int TIMER_UPDATE_DELAY = 10;
 	

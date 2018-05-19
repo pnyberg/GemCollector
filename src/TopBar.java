@@ -10,11 +10,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class GemCollectorTopBar {
+public class TopBar {
 	private int width;
-	private GemCollectorCollector collector;
+	private GemCollector collector;
 	
-	public GemCollectorTopBar(int width, GemCollectorCollector collector) {
+	public TopBar(int width, GemCollector collector) {
 		this.width = width;
 		this.collector = collector;
 	}
@@ -26,7 +26,7 @@ public class GemCollectorTopBar {
 		return width;
 	}
 	
-	public GemCollectorCollector getCollector() {
+	public GemCollector getCollector() {
 		return collector;
 	}
 	
@@ -35,10 +35,10 @@ public class GemCollectorTopBar {
 	 */
 	public void paint(Graphics g, int x, int y) {
 		g.setColor(Color.white);
-		g.fillRect(x, y, width, GemCollectorConfig.TOP_BAR_HEIGHT);
+		g.fillRect(x, y, width, Config.TOP_BAR_HEIGHT);
 
 		g.setColor(Color.black);
-		g.drawRect(x, y, width, GemCollectorConfig.TOP_BAR_HEIGHT);
+		g.drawRect(x, y, width, Config.TOP_BAR_HEIGHT);
 		
 		collector.paint(g);
 	}	

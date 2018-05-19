@@ -1,10 +1,10 @@
 import java.awt.Graphics;
 
-public class GemCollectorCollector {
-	private GemCollectorGemSlot[] gemSlots;
+public class GemCollector {
+	private GemSlot[] gemSlots;
 	
-	public GemCollectorCollector(int amountOfGems) {
-		gemSlots = new GemCollectorGemSlot[amountOfGems];
+	public GemCollector(int amountOfGems) {
+		gemSlots = new GemSlot[amountOfGems];
 		
 		initGemSlots();
 	}
@@ -16,10 +16,10 @@ public class GemCollectorCollector {
 	 * Initialize all the gemslots and line them up in a row
 	 */
 	private void initGemSlots() {
-		int y = (GemCollectorConfig.TOP_BAR_HEIGHT - GemCollectorConfig.GEM_SLOT_DIAMETER) / 2;
+		int y = (Config.TOP_BAR_HEIGHT - Config.GEM_SLOT_DIAMETER) / 2;
 		for (int i = 0 ; i < gemSlots.length ; i++) {
-			int x = 100 + i * (GemCollectorConfig.GEM_SLOT_DIAMETER+10);
-			GemCollectorGemSlot slot = new GemCollectorGemSlot(x, y);
+			int x = 100 + i * (Config.GEM_SLOT_DIAMETER+10);
+			GemSlot slot = new GemSlot(x, y);
 			gemSlots[i] = slot;
 		}
 	}
@@ -31,7 +31,7 @@ public class GemCollectorCollector {
 		return gemSlots.length;
 	}
 	
-	public GemCollectorGemSlot getGemSlot(int index) {
+	public GemSlot getGemSlot(int index) {
 		return gemSlots[index];
 	}
 	
@@ -47,7 +47,7 @@ public class GemCollectorCollector {
 	 * Paint-methods
 	 */
 	public void paint(Graphics g) {
-		for (GemCollectorGemSlot gemSlot : gemSlots) {
+		for (GemSlot gemSlot : gemSlots) {
 			gemSlot.paint(g);
 		}
 	}

@@ -11,15 +11,15 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class GemCollectorPlayer {
+public class Player {
 	private int x;
 	private int y;
 	private int size;
 	private Color color;
 	private int activeSlotIndex;
-	private GemCollectorCollector collector;
+	private GemCollector collector;
 	
-	public GemCollectorPlayer(int x, int y, int size, Color color, GemCollectorCollector collector) {
+	public Player(int x, int y, int size, Color color, GemCollector collector) {
 		this.x = x;
 		this.y = y;
 		this.size = size;
@@ -83,7 +83,7 @@ public class GemCollectorPlayer {
 		return color;
 	}
 	
-	public GemCollectorCollector getCollector() {
+	public GemCollector getCollector() {
 		return collector;
 	}
 	

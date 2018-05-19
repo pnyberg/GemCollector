@@ -9,13 +9,13 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class GemCollectorGemSlot {
+public class GemSlot {
 	private int x;
 	private int y;
-	private GemCollectorGem gem;
+	private Gem gem;
 	private boolean gemSlotted;
 	
-	public GemCollectorGemSlot(int x, int y) {
+	public GemSlot(int x, int y) {
 		this.x = x;
 		this.y = y;
 		
@@ -26,7 +26,7 @@ public class GemCollectorGemSlot {
 	/*
 	 * Mutator
 	 */
-	public void addGem(GemCollectorGem gem) {
+	public void addGem(Gem gem) {
 		this.gem = gem;
 	}
 	
@@ -56,7 +56,7 @@ public class GemCollectorGemSlot {
 		return y;
 	}
 	
-	public GemCollectorGem getGem() {
+	public Gem getGem() {
 		return gem;
 	}
 	
@@ -64,7 +64,7 @@ public class GemCollectorGemSlot {
 	 * Painters
 	 */
 	public void paint(Graphics g) {
-		int diameter = GemCollectorConfig.GEM_SLOT_DIAMETER;
+		int diameter = Config.GEM_SLOT_DIAMETER;
 
 		if (gemSlotted) {
 			g.setColor(gem.getColor());

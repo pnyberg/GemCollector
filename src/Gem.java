@@ -12,14 +12,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-public class GemCollectorGem {
+public class Gem {
 	private int x;
 	private int y;
 	private int size;
 	private Image image;
 	private Color color;
 	
-	public GemCollectorGem(int x, int y, int size, Image image, Color color) {
+	public Gem(int x, int y, int size, Image image, Color color) {
 		this.x = x;
 		this.y = y;
 		this.size = size;

@@ -15,14 +15,14 @@ import java.awt.Toolkit;
 import jGame.JGameFrame;
 
 public class GemCollecting extends JGameFrame {
-	private GemCollectorPanel gemCollectorPanel;
-	private GemCollectorPlayer player;
+	private Panel gemCollectorPanel;
+	private Player player;
 	
 	public GemCollecting() {
 		int amountOfGems = 5;
 
 		initPlayer(2, 2, amountOfGems, Color.black);
-		gemCollectorPanel = new GemCollectorPanel(GemCollectorConfig.BOARD_WIDTH, GemCollectorConfig.BOARD_HEIGHT, player);
+		gemCollectorPanel = new Panel(Config.BOARD_WIDTH, Config.BOARD_HEIGHT, player);
 		
 		addPanel(gemCollectorPanel);
 		
@@ -51,12 +51,12 @@ public class GemCollecting extends JGameFrame {
 	}
 	
 	private void initPlayer(int x, int y, int amountOfGems, Color color) {
-		GemCollectorCollector collector = new GemCollectorCollector(amountOfGems);
-		player = new GemCollectorPlayer(x * GemCollectorConfig.TILE_SIZE, y * GemCollectorConfig.TILE_SIZE, GemCollectorConfig.TILE_SIZE, color, collector);
+		GemCollector collector = new GemCollector(amountOfGems);
+		player = new Player(x * Config.TILE_SIZE, y * Config.TILE_SIZE, Config.TILE_SIZE, color, collector);
 	}
 	
 	private void initGem(int x, int y, Image image, Color color) {
-		GemCollectorGem gem = new GemCollectorGem(x * GemCollectorConfig.TILE_SIZE, y * GemCollectorConfig.TILE_SIZE, GemCollectorConfig.TILE_SIZE, image, color);
+		Gem gem = new Gem(x * Config.TILE_SIZE, y * Config.TILE_SIZE, Config.TILE_SIZE, image, color);
 		gemCollectorPanel.addGem(gem);
 	}
 	

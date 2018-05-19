@@ -33,21 +33,11 @@ public class GemCollecting extends JGameFrame {
 	 * Creates the gems and adds them to the panel
 	 */
 	private void initGems() {
-		Color purple = new Color(138,43,226);
-		Image purple_image = Toolkit.getDefaultToolkit().getImage("./images/purple_stone.png");
-		initGem(5, 5, purple_image, purple);
-
-		Image red_image = Toolkit.getDefaultToolkit().getImage("./images/red_stone.png");
-		initGem(1, 3, red_image, Color.red);
-
-		Image blue_image = Toolkit.getDefaultToolkit().getImage("./images/blue_stone.png");
-		initGem(4, 1, blue_image, Color.blue);
-		
-		Image green_image = Toolkit.getDefaultToolkit().getImage("./images/green_stone.png");
-		initGem(2, 5, green_image, Color.green);
-
-		Image orange_image = Toolkit.getDefaultToolkit().getImage("./images/orange_stone.png");
-		initGem(3, 2, orange_image, Color.orange);
+		initGem(5, 5, GemAttribute.PURPLE_STONE);
+		initGem(1, 3, GemAttribute.RED_STONE);
+		initGem(4, 1, GemAttribute.BLUE_STONE);
+		initGem(2, 5, GemAttribute.GREEN_STONE);
+		initGem(3, 2, GemAttribute.ORANGE_STONE);
 	}
 	
 	private void initPlayer(int x, int y, int amountOfGems, Color color) {
@@ -55,8 +45,8 @@ public class GemCollecting extends JGameFrame {
 		player = new Player(x * Config.TILE_SIZE, y * Config.TILE_SIZE, Config.TILE_SIZE, color, collector);
 	}
 	
-	private void initGem(int x, int y, Image image, Color color) {
-		Gem gem = new Gem(x * Config.TILE_SIZE, y * Config.TILE_SIZE, Config.TILE_SIZE, image, color);
+	private void initGem(int x, int y, GemAttribute gemAttribute) {
+		Gem gem = new Gem(x * Config.TILE_SIZE, y * Config.TILE_SIZE, Config.TILE_SIZE, gemAttribute);
 		gemCollectorPanel.addGem(gem);
 	}
 	

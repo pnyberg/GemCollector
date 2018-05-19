@@ -9,22 +9,18 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 
 public class Gem {
 	private int x;
 	private int y;
 	private int size;
-	private Image image;
-	private Color color;
+	private GemAttribute gemAttribute;
 	
-	public Gem(int x, int y, int size, Image image, Color color) {
+	public Gem(int x, int y, int size, GemAttribute gemAttribute) {
 		this.x = x;
 		this.y = y;
 		this.size = size;
-		this.image = image;
-		this.color = color;
+		this.gemAttribute = gemAttribute;
 	}
 
 	/*
@@ -50,14 +46,18 @@ public class Gem {
 		return size;
 	}
 	
+	public GemAttribute getGemAttribute() {
+		return gemAttribute;
+	}
+	
 	public Color getColor() {
-		return color;
+		return gemAttribute.getColor();
 	}
 	
 	/*
 	 * Painters
 	 */
 	public void paint(Graphics g) {
-		g.drawImage(image, x+size/8, y+size/8, (3 * size) / 4, (3 * size) / 4, null);
+		g.drawImage(gemAttribute.getImage(), x+size/8, y+size/8, (3 * size) / 4, (3 * size) / 4, null);
 	}
 }

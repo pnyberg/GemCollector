@@ -34,7 +34,8 @@ public class TopBar {
 	 * Painters
 	 */
 	public void paint(Graphics g, int x, int y) {
-		g.setColor(Color.white);
+		Color color = Color.darkGray;
+		g.setColor(Color.darkGray);
 		g.fillRect(x, y, width, Config.TOP_BAR_HEIGHT);
 
 		g.setColor(Color.black);

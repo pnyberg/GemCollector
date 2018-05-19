@@ -10,7 +10,8 @@
  *   
  *  At the moment the player can go wherever it want, but
  *   if this would be a more serious game then bounds would
- *   need to be implemented.
+ *   need to be implemented. And some way to win. And more
+ *   effects for the gems.
  * 
  * @author: Per Nyberg
  */
@@ -27,7 +28,7 @@ import javax.swing.Timer;
 
 import jGame.JGamePanel;
 
-public class Panel extends JGamePanel implements ActionListener, MouseListener {
+public class Board extends JGamePanel implements ActionListener, MouseListener {
 	private Timer timer;
 	
 	private TopBar gemCollectorTopBar;
@@ -36,15 +37,15 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 	private Player player;
 	private int slotIndex;
 	
-	public Panel(int width, int height, Player player) {
+	public Board(int width, int height, Player player) {
 		super(width, height);
+		
+		addMouseListener(this);
 		
 		this.player = player;
 		
 		gems = new ArrayList<Gem>();
 		teleportations = new ArrayList<Teleportation>();
-		
-		addMouseListener(this);
 		
 		player.setPosition(player.getX(), player.getY() + Config.TOP_BAR_HEIGHT);
 		
@@ -64,7 +65,6 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		gems.add(gem);
 	}
 	
-
 	/*
 	 * ActionListener-methods
 	 */
@@ -108,6 +108,10 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		}
 	}
 	
+	/**
+	 * Goes through all active teleportations and makes
+	 *  a "round" for them (basically updating them)
+	 */
 	private void doTeleportationRounds() {
 		for (int i = 0 ; i < teleportations.size() ; i++) {
 			teleportations.get(i).doRound();
@@ -168,11 +172,12 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 	/*
 	 * MouseLstener-methods
 	 */
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int mouseX = e.getX();
 		int mouseY = e.getY();
+		
+		// if the player can teleport, do so
 		if (player.getActiveGemAttribute() == GemAttribute.BLUE_STONE && 
 			!player.isTeleporting() &&
 			Config.TOP_BAR_HEIGHT <= mouseY && 
@@ -217,6 +222,8 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		
 		g.setColor(lightLightGray);
 		g.fillRect(0, 0, getPanelWidth(), getPanelHeight());
+
+		paintBoardNet(g);
 		
 		gemCollectorTopBar.paint(g, 0, 0);
 		
@@ -229,5 +236,19 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		}
 		
 		player.paint(g);
+	}
+	
+	private void paintBoardNet(Graphics g) {
+		g.setColor(new Color(211, 223, 211));
+		
+		// painting column-lines
+		for (int x = 0 ; x <= Config.BOARD_WIDTH ; x += Config.TILE_SIZE) {
+			g.drawLine(x, 0, x, Config.BOARD_HEIGHT);
+		}
+		
+		// painting row-lines
+		for (int y = Config.TOP_BAR_HEIGHT ; y <= Config.BOARD_HEIGHT ; y += Config.TILE_SIZE) {
+			g.drawLine(0, y, getPanelWidth(), y);
+		}
 	}
 }

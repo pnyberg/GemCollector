@@ -1,11 +1,16 @@
 /**
  * This games goal is to collect all the gems
  *  on the board. If the player does this, then
- *  nothing happens, it just looks cool.
+ *  nothing happens, it just looks really really cool.
+ *  
+ *  At this point there is no check that "amount of gems"
+ *  is the same amount as the number of gems added.
  *  
  * Features that can be added:
  * - Adding functionality to the gems
- * - Adding something that happens when you "win"
+ * - Adding something that happens when you "win" (collect all gems)
+ *
+ * @author: Per Nyberg
  */
 
 import java.awt.Color;
@@ -15,14 +20,15 @@ import java.awt.Toolkit;
 import jGame.JGameFrame;
 
 public class GemCollecting extends JGameFrame {
-	private Panel gemCollectorPanel;
+	private Board gemCollectorPanel;
 	private Player player;
 	
 	public GemCollecting() {
 		int amountOfGems = 5;
 
 		initPlayer(2, 2, amountOfGems, Color.black);
-		gemCollectorPanel = new Panel(Config.BOARD_WIDTH, Config.BOARD_HEIGHT, player);
+
+		gemCollectorPanel = new Board(Config.BOARD_WIDTH, Config.BOARD_HEIGHT, player);
 		
 		addPanel(gemCollectorPanel);
 		
@@ -30,7 +36,7 @@ public class GemCollecting extends JGameFrame {
 	}
 	
 	/**
-	 * Creates the gems and adds them to the panel
+	 * Creates the gems and adds them to the board
 	 */
 	private void initGems() {
 		initGem(5, 5, GemAttribute.PURPLE_STONE);
@@ -50,6 +56,9 @@ public class GemCollecting extends JGameFrame {
 		gemCollectorPanel.addGem(gem);
 	}
 	
+	/*
+	 * Main
+	 */
 	public static void main(String[] args) {
 		new GemCollecting();
 	}

@@ -1,6 +1,8 @@
 /**
- * The gems has positions and colors and are supposed to
- *  be collected by the player.
+ * The gems are supposed to be collected by the player.
+ *  The gem-attribute holds the image and the color for
+ *  which the gem shows. The gem is also smaller than
+ *  the tile (so it's inside of the tile).
  *  
  *  At this moment they have no more use than that.
  * 
@@ -58,6 +60,11 @@ public class Gem {
 	 * Painters
 	 */
 	public void paint(Graphics g) {
-		g.drawImage(gemAttribute.getImage(), x+size/8, y+size/8, (3 * size) / 4, (3 * size) / 4, null);
+		// The aligntment and the size is because we want the image to be a 
+		//  little bit smaller than the tile
+		int alignment = size/8;
+		int imageSize = (3 * size) / 4;
+		g.drawImage(gemAttribute.getImage(), x+alignment, y+alignment, 
+					imageSize, imageSize, null);
 	}
 }

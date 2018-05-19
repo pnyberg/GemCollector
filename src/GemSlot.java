@@ -1,5 +1,6 @@
 /**
- * This slot can hold a GemCollectorGem.
+ * This slot can hold a Gem. It lights up with the color
+ *  of the gem when it gets "slotted".
  * 
  * At the moment this has no purpose other than painting
  *  the slot for the gem.
@@ -66,6 +67,7 @@ public class GemSlot {
 	public void paint(Graphics g) {
 		int diameter = Config.GEM_SLOT_DIAMETER;
 
+		// Paint the outer circe (white/gem-colored)
 		if (gemSlotted) {
 			g.setColor(gem.getColor());
 		} else {
@@ -76,9 +78,11 @@ public class GemSlot {
 		g.setColor(Color.black);
 		g.drawOval(x, y, diameter, diameter);
 
+		// Paint the inner circle
 		g.setColor(Color.gray);
 		g.fillOval(x+2, y+2, diameter-4, diameter-4);
 		
+		// if a gem is slotted it gets painted as well
 		if (gemSlotted) {
 			gem.paint(g);
 		}

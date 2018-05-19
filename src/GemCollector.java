@@ -1,3 +1,10 @@
+/**
+ * A collector that holds the slots for the gems.
+ *  Should be connected with the player collecting
+ *  the gems.
+ * 
+ * @author Per Nyberg
+ */
 import java.awt.Graphics;
 
 public class GemCollector {
@@ -13,14 +20,17 @@ public class GemCollector {
 	 * Mutators
 	 */
 	/**
-	 * Initialize all the gemslots and line them up in a row
+	 * Initialize all the gemslots and give them coordinates
+	 *  such that they line up in a row
 	 */
 	private void initGemSlots() {
+		int xAlignment = 100;
+		int xSpaceBetweenSlots = 10;
 		int y = (Config.TOP_BAR_HEIGHT - Config.GEM_SLOT_DIAMETER) / 2;
+		
 		for (int i = 0 ; i < gemSlots.length ; i++) {
-			int x = 100 + i * (Config.GEM_SLOT_DIAMETER+10);
-			GemSlot slot = new GemSlot(x, y);
-			gemSlots[i] = slot;
+			int x = xAlignment + i * (Config.GEM_SLOT_DIAMETER + xSpaceBetweenSlots);
+			gemSlots[i] = new GemSlot(x, y);
 		}
 	}
 	

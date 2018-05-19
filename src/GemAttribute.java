@@ -1,3 +1,10 @@
+/**
+ * The enum holds attributes (image and color) 
+ *  for predefined stones. Used to define the
+ *  gems for effects etc.
+ * 
+ * @author: Per Nyberg
+ */
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;

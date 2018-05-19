@@ -1,9 +1,9 @@
 /**
  * The player is given a start-position and a color and can then
- *  be moved through-out the map.
+ *  move through-out the map.
  *  
  *  At the moment the player does nothing special with the collected
- *   gems.
+ *   gems, except for the blue one, that shit is cool.
  * 
  * @author: Per Nyberg
  */
@@ -51,6 +51,10 @@ public class Player {
 	}
 	
 	public void changeToNextGemSlot() {
+		// go through the loop until a slotted gem is found
+		//  if the loop is exited without finding a gem then
+		//  no gem will be activated. Start-position is the
+		//  current activated gem.
 		for (int i = activeSlotIndex+1 ; i < collector.getAmountOfGems() ; i++) {
 			if (collector.getGemSlot(i).isGemSlotted()) {
 				activeSlotIndex = i;
@@ -134,6 +138,7 @@ public class Player {
 			return;
 		}
 		
+		// if there is an active gem, paint an outline for the player in that color
 		if (activeSlotIndex != -1) {
 			g.setColor(collector.getGemSlot(activeSlotIndex).getGem().getColor());
 			g.fillRect(x-2, y-2, size+5, size+5);			

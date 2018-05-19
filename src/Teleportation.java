@@ -121,9 +121,11 @@ public class Teleportation {
 	public void paint(Graphics g) {
 		// Since the teleportation is connected to the blue
 		//  stone the color for the portal comes form the gem
-		g.setColor(GemAttribute.BLUE_STONE.getColor().darker());
-		g.fillOval(x, y, size, size);
+		int blackEdgeWidth = 3;
+		
 		g.setColor(Color.black);
-		g.drawOval(x, y, size, size);
+		g.fillOval(x, y, size, size);
+		g.setColor(GemAttribute.BLUE_STONE.getColor().darker());
+		g.fillOval(x+blackEdgeWidth, y+blackEdgeWidth, size-2*blackEdgeWidth, size-2*blackEdgeWidth);
 	}
 }

@@ -119,6 +119,8 @@ public class Board extends JGamePanel implements ActionListener, MouseListener {
 			if (teleportations.get(i).isDone()) {
 				teleportations.remove(i);
 				i--;
+
+				checkPlayerGemInteraction(); // check if the player landed on a gem
 			}
 		}
 	}

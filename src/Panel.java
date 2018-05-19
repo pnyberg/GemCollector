@@ -32,6 +32,7 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 	
 	private TopBar gemCollectorTopBar;
 	private ArrayList<Gem> gems;
+	private ArrayList<Teleportation> teleportations;
 	private Player player;
 	private int slotIndex;
 	
@@ -41,6 +42,7 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		this.player = player;
 		
 		gems = new ArrayList<Gem>();
+		teleportations = new ArrayList<Teleportation>();
 		
 		addMouseListener(this);
 		
@@ -69,6 +71,7 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		moveGemsTowardsSlots();
+		doTeleportationRounds();
 		repaint();
 	}
 	
@@ -101,6 +104,17 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 					slot.setGemSlotted(true);
 					gems.remove(gem);
 				}
+			}
+		}
+	}
+	
+	private void doTeleportationRounds() {
+		for (int i = 0 ; i < teleportations.size() ; i++) {
+			teleportations.get(i).doRound();
+			
+			if (teleportations.get(i).isDone()) {
+				teleportations.remove(i);
+				i--;
 			}
 		}
 	}
@@ -160,13 +174,15 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 		if (player.getActiveGemAttribute() == GemAttribute.BLUE_STONE && 
+			!player.isTeleporting() &&
 			Config.TOP_BAR_HEIGHT <= mouseY && 
 			mouseY < (Config.TOP_BAR_HEIGHT + Config.BOARD_HEIGHT) &&
 			0 <= mouseX && mouseX <= Config.BOARD_WIDTH) {
 			int x = mouseX - mouseX % Config.TILE_SIZE;
 			int y = mouseY - (mouseY-Config.TOP_BAR_HEIGHT) % Config.TILE_SIZE;
 			
-			player.setPosition(x, y);
+			teleportations.add(new Teleportation(player, x, y));
+			player.setTeleporting(true);
 		}
 	}
 
@@ -203,6 +219,10 @@ public class Panel extends JGamePanel implements ActionListener, MouseListener {
 		g.fillRect(0, 0, getPanelWidth(), getPanelHeight());
 		
 		gemCollectorTopBar.paint(g, 0, 0);
+		
+		for (Teleportation teleportation : teleportations) {
+			teleportation.paint(g);
+		}
 		
 		for (Gem gem : gems) {
 			gem.paint(g);

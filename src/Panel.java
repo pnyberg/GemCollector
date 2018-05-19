@@ -17,21 +17,20 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.Timer;
 
 import jGame.JGamePanel;
 
-public class Panel extends JGamePanel implements ActionListener {
+public class Panel extends JGamePanel implements ActionListener, MouseListener {
 	private Timer timer;
 	
 	private TopBar gemCollectorTopBar;
-	private int amountOfGems;
 	private ArrayList<Gem> gems;
 	private Player player;
 	private int slotIndex;
@@ -39,10 +38,11 @@ public class Panel extends JGamePanel implements ActionListener {
 	public Panel(int width, int height, Player player) {
 		super(width, height);
 		
-		this.amountOfGems = amountOfGems;
 		this.player = player;
 		
 		gems = new ArrayList<Gem>();
+		
+		addMouseListener(this);
 		
 		player.setPosition(player.getX(), player.getY() + Config.TOP_BAR_HEIGHT);
 		
@@ -152,12 +152,44 @@ public class Panel extends JGamePanel implements ActionListener {
 	}
 	
 	/*
-	 * Getters
+	 * MouseLstener-methods
 	 */
-	public int getAmountOfGems() {
-		return amountOfGems;
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+		if (player.getActiveGemAttribute() == GemAttribute.BLUE_STONE && 
+			Config.TOP_BAR_HEIGHT <= mouseY && 
+			mouseY < (Config.TOP_BAR_HEIGHT + Config.BOARD_HEIGHT) &&
+			0 <= mouseX && mouseX <= Config.BOARD_WIDTH) {
+			int x = mouseX - mouseX % Config.TILE_SIZE;
+			int y = mouseY - (mouseY-Config.TOP_BAR_HEIGHT) % Config.TILE_SIZE;
+			
+			player.setPosition(x, y);
+		}
 	}
 
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// do nothing
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// do nothing
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// do nothing
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// do nothing
+	}
+	
 	/*
 	 * Painters
 	 */

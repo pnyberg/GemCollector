@@ -87,16 +87,12 @@ public class Player {
 		return collector;
 	}
 	
-	private int getNumberOfSlottedGems() {
-		int numberOfSlottedGems = 0;
-		
-		for (int i = 0 ; i < collector.getAmountOfGems() ; i++) {
-			if (collector.getGemSlot(i).isGemSlotted()) {
-				numberOfSlottedGems++;
-			}
+	public GemAttribute getActiveGemAttribute() {
+		if (activeSlotIndex == -1) {
+			return null;
 		}
 		
-		return numberOfSlottedGems;
+		return collector.getGemSlot(activeSlotIndex).getGem().getGemAttribute();
 	}
 	
 	/*
